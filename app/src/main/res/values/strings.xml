@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MVVM-H1</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="dialog_text">No Internet Connection! Connect to the internet to get data, after you can use it in offline mode.\nIf you connected to the internet press Refresh</string>
+
+    <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
