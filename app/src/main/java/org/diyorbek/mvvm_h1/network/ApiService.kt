@@ -14,7 +14,7 @@ interface ApiService {
 
     @GET("photos/{id}")
     fun getOnePhoto(
-        @Query("id")id: Int
+        @Path("id") id: Int
     ): Call<PhotoItem>
 
     @GET("photos/15286")

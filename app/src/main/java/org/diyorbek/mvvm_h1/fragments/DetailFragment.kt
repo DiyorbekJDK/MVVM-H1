@@ -49,8 +49,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         val id = arguments?.getParcelable<PhotoItem>("id")
         Log.d("@@@", "ID: ${id.toString()}")
 
-        RetroInstance.retrofitInstance().getOnePhoto(id?.id!!).enqueue(object : Callback<PhotoItem>{
+        RetroInstance.retrofitInstance().getOnePhoto(id?.id  ?: 0).enqueue(object : Callback<PhotoItem>{
             override fun onResponse(call: Call<PhotoItem>, response: Response<PhotoItem>) {
+                Log.d("@@@", "RESPONCE : ${response.errorBody().toString()}")
+
                 if (response.isSuccessful){
                     snackBar("asdasdadsda")
                     Glide.with(binding.img)
