@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +17,7 @@ import org.diyorbek.mvvm_h1.model.PhotoItem
 
 class PhotoAdapter : ListAdapter<PhotoItem, PhotoAdapter.PhotoViewHolder>(DiffCallBack()) {
     lateinit var onClick: (PhotoItem) -> Unit
+    lateinit var onLongClick: (PhotoItem) -> Unit
 
     private class DiffCallBack : DiffUtil.ItemCallback<PhotoItem>() {
         override fun areItemsTheSame(oldItem: PhotoItem, newItem: PhotoItem): Boolean {
@@ -38,8 +38,12 @@ class PhotoAdapter : ListAdapter<PhotoItem, PhotoAdapter.PhotoViewHolder>(DiffCa
                     .into(photoImg)
 
 
-                photoImg.setOnClickListener{
+                itemView.setOnClickListener{
                     onClick(photo)
+                }
+                itemView.setOnLongClickListener{
+                    onLongClick(photo)
+                    true
                 }
             }
         }

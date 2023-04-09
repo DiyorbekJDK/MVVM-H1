@@ -46,7 +46,7 @@ class SearchFragment : Fragment() {
 
         photoAdapter.onClick = {
             val bundle = bundleOf("id" to it.id)
-            findNavController().navigate(R.id.action_navigation_dashboard_to_detailFragment,bundle)
+            findNavController().navigate(R.id.action_navigation_dashboard_to_detailFragment, bundle)
         }
         binding.rv2.apply {
             adapter = photoAdapter
@@ -57,27 +57,29 @@ class SearchFragment : Fragment() {
         }
 
     }
+
     private fun loadData() {
-        RetroInstance.retrofitInstance().searchPhoto(binding.input.text.toString()).enqueue(object : Callback<PhotoResponse> {
-            override fun onResponse(
-                call: Call<PhotoResponse>,
-                response: Response<PhotoResponse>
-            ) {
-                if (response.isSuccessful) {
-                    binding.progressBar2.isVisible = false
-                    photoAdapter.submitList(response.body()?.photos!!)
+        RetroInstance.retrofitInstance().searchPhoto(binding.input.text.toString())
+            .enqueue(object : Callback<PhotoResponse> {
+                override fun onResponse(
+                    call: Call<PhotoResponse>,
+                    response: Response<PhotoResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        binding.progressBar2.isVisible = false
+                        photoAdapter.submitList(response.body()?.photos!!)
 
 
-                } else {
-                    Log.d("@@@Response error", "onResponse: ${response.errorBody().toString()}")
+                    } else {
+                        Log.d("@@@Response error", "onResponse: ${response.errorBody().toString()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<PhotoResponse>, t: Throwable) {
-                snackBar("There is some error")
-                Log.d("@@@Response error", "onFailure: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<PhotoResponse>, t: Throwable) {
+                    snackBar("There is some error")
+                    Log.d("@@@Response error", "onFailure: ${t.message}")
+                }
+            })
     }
 
     override fun onDestroyView() {

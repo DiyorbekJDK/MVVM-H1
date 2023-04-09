@@ -46,15 +46,21 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
+
         val id = arguments?.getParcelable<PhotoItem>("id")
         Log.d("@@@", "ID: ${id.toString()}")
+
+        binding.bnt.setOnClickListener {
+            saveToDb(id!!)
+        }
 
         RetroInstance.retrofitInstance().getOnePhoto(id?.id  ?: 0).enqueue(object : Callback<PhotoItem>{
             override fun onResponse(call: Call<PhotoItem>, response: Response<PhotoItem>) {
                 Log.d("@@@", "RESPONCE : ${response.errorBody().toString()}")
 
                 if (response.isSuccessful){
-                    snackBar("asdasdadsda")
                     Glide.with(binding.img)
                         .load(response.body()?.src?.original)
                         .into(binding.img)
@@ -70,6 +76,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             }
         })
 
+    }
+
+    private fun saveToDb(photo: PhotoItem) {
+        viewModel.savePhoto(photo)
+        snackBar("Saved!")
     }
 
 
